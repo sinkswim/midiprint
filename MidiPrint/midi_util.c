@@ -133,7 +133,6 @@ CFStringRef getDisplayName(MIDIObjectRef object)
         printf("failed to get display name: %s\n", midiErrorToString(status));
         return nil;
     }
-
     return name;
 }
 
