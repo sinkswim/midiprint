@@ -1,0 +1,17 @@
+MidiPrint Notes and TODO
+
+NOTES:
+
+OLD:
+	create a MIDIClientRef midiClient
+	create a MIDIPortRef midiInputPort, here we declare the midiInputCallback that will be called when in CFRunLoop
+	get number of sources numSources
+	cycle through sources; if endpoint is MPK mini:
+								 initialize MIDIObjectRef mpkEndpoint
+								 assert(mpkEndpoint != 0)
+								 connect endpoint to previously created inputPort MIDIPortConnectSource(inputPort, mpkEndpoint, NULL)
+								 CFRunLoopRun()
+
+TODO:
+
+	--improve tool printing out all devices that are connected and their midi messages (mpkmini -> all)
