@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E1317C041ABA86310075D830 /* midi_util.c in Sources */ = {isa = PBXBuildFile; fileRef = E1317C021ABA86310075D830 /* midi_util.c */; };
+		E13E42BD1ACCD0C600CB4F05 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E1BA506B1AB9C4B300DB172F /* main.c */; };
 		E1BA50771AB9C70300DB172F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1BA50761AB9C70300DB172F /* CoreMIDI.framework */; };
-		E1D631481ABC70A30019CE77 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E1BA506B1AB9C4B300DB172F /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,7 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E1317BFF1ABA79B50075D830 /* basic_printer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = basic_printer.c; sourceTree = "<group>"; };
+		E1317BFF1ABA79B50075D830 /* mpkmini_monitor_old.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mpkmini_monitor_old.c; sourceTree = "<group>"; };
 		E1317C021ABA86310075D830 /* midi_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = midi_util.c; sourceTree = "<group>"; };
 		E1317C031ABA86310075D830 /* midi_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midi_util.h; sourceTree = "<group>"; };
 		E1BA50681AB9C4B300DB172F /* MidiPrint */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MidiPrint; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +68,7 @@
 				E1BA506B1AB9C4B300DB172F /* main.c */,
 				E1317C021ABA86310075D830 /* midi_util.c */,
 				E1317C031ABA86310075D830 /* midi_util.h */,
-				E1317BFF1ABA79B50075D830 /* basic_printer.c */,
+				E1317BFF1ABA79B50075D830 /* mpkmini_monitor_old.c */,
 			);
 			path = MidiPrint;
 			sourceTree = "<group>";
@@ -130,7 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1317C041ABA86310075D830 /* midi_util.c in Sources */,
-				E1D631481ABC70A30019CE77 /* main.c in Sources */,
+				E13E42BD1ACCD0C600CB4F05 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

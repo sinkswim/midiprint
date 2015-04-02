@@ -16,8 +16,8 @@ int min(int a,  int b){
     return (a>b)?b:a;
 }
 
-void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
-{
+//called whenever there is incoming MIDI from connected sources
+void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef){
     
     bool continueSysEx = false;
     UInt16 nBytes;
@@ -123,10 +123,8 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
     
 }
 
-
-CFStringRef getDisplayName(MIDIObjectRef object)
-{
-    // Returns the display name of a given MIDIObjectRef as a string
+// Returns the display name of a given MIDIObjectRef as a CFStringRef
+CFStringRef getDisplayName(MIDIObjectRef object){
     CFStringRef name = nil;
     OSStatus status = MIDIObjectGetStringProperty(object, kMIDIPropertyName, &name);
     if (status != noErr) {
@@ -136,6 +134,7 @@ CFStringRef getDisplayName(MIDIObjectRef object)
     return name;
 }
 
+//decodes a MIDIObjectType
 char* midiTypeToString(MIDIObjectType midiType) {
     switch (midiType) {
         case kMIDIObjectType_Other: return "other";
@@ -147,6 +146,7 @@ char* midiTypeToString(MIDIObjectType midiType) {
     }
 }
 
+//decodes an OSStatus
 char* midiErrorToString(OSStatus statusCode) {
     switch (statusCode) {
         case kMIDIInvalidClient: return "invalid client";

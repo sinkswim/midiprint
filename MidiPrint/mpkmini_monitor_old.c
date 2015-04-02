@@ -15,7 +15,7 @@
 
 
 int main(int argc, const char * argv[]) {
-    printf("Hello, World!\n");
+    printf("Old Akai MPKmini only monitoring\n\n");
     
     MIDIClientRef midiClient;
     OSStatus result;
@@ -45,30 +45,6 @@ int main(int argc, const char * argv[]) {
             mpkEndpoint = endpoint;
         }
     }
-
-//    for (int i = 0; i < numOfDevices; i++) {
-//        MIDIDeviceRef midiDevice = MIDIGetDevice(i);
-//        CFStringRef deviceName = getDisplayName(midiDevice);
-//        ItemCount numSources = MIDIEntityGetNumberOfSources(midiDevice);
-//        
-//        CFShow(deviceName);
-//        printf("numSources=%lu\n", numSources);
-//        
-//        for (int j = 0; j < numSources; j++) {
-//            MIDIEndpointRef endpoint = MIDIEntityGetSource(midiDevice, j);
-//            CFStringRef endpointName = getDisplayName(endpoint);
-//            printf("endpoint: ");
-//            CFShow(endpointName);
-//            
-//            if (CFEqual(endpointName, mpkEndpointName)) {
-//                printf("found it\n");
-//                mpkEndpoint = endpoint;
-//            }
-//            
-//        }
-//        printf("---------------\n");
-//        
-//    }
     assert(mpkEndpoint != 0);
     
     result = MIDIPortConnectSource(inputPort, mpkEndpoint, NULL);
