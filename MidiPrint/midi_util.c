@@ -2,9 +2,6 @@
 //  midi_util.c
 //  MidiPrint
 //
-//  Created by Robert Margelli on 3/18/15.
-//  Copyright (c) 2015 Robert Margelli. All rights reserved.
-//
 
 
 #include "midi_util.h"
@@ -16,7 +13,15 @@ int min(int a,  int b){
     return (a>b)?b:a;
 }
 
-//called whenever there is incoming MIDI from connected sources
+//called whenever there is incoming MIDI from connected sources, see doc for MIDIReadProc
+//pktlist
+//The incoming MIDI message(s).
+//
+//readProcRefCon
+//The refCon you passed to MIDIInputPortCreate or MIDIDestinationCreate
+//
+//srcConnRefCon
+//A refCon you passed to MIDIPortConnectSource, which identifies the source of the data.
 void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef){
     
     bool continueSysEx = false;
@@ -79,7 +84,7 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                 unsigned char messageType = status & 0xF0;
                 unsigned char messageChannel = status & 0xF;
                 
-                switch (status & 0xF0) {
+                switch (messageType) {
                     case 0x80:
                         printf("Note off: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
                         break;
@@ -93,7 +98,7 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                         break;
                         
                     case 0xB0:
-                        printf("Control message: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
+                        printf("Control change: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
                         break;
                         
                     case 0xC0:
@@ -109,7 +114,7 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                         break;
                         
                     default:
-                        printf("Some other message\n");
+                        printf("Uncommon message (0xF1 to 0xFF)\n");
                         break;
                 }
                 

@@ -2,9 +2,6 @@
 //  main.c
 //  MidiPrint
 //
-//  Created by Robert Margelli on 3/18/15.
-//  Copyright (c) 2015 Robert Margelli. All rights reserved.
-//
 
 #include <stdio.h>
 #include <stdlib.h>
