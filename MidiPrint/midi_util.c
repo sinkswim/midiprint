@@ -9,21 +9,16 @@
 
 #define SYSEX_LENGTH 1024
 
+
 int min(int a,  int b){
-    return (a>b)?b:a;
+    return (a>=b)?b:a;
 }
 
 //called whenever there is incoming MIDI from connected sources, see doc for MIDIReadProc
-//pktlist
-//The incoming MIDI message(s).
-//
-//readProcRefCon
-//The refCon you passed to MIDIInputPortCreate or MIDIDestinationCreate
-//
-//srcConnRefCon
-//A refCon you passed to MIDIPortConnectSource, which identifies the source of the data.
 void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef){
-    
+    printf("Message from: ");
+    MIDIObjectRef midiObject = *(MIDIObjectRef*)srcRef;
+    CFShow(getDisplayName(midiObject));
     bool continueSysEx = false;
     UInt16 nBytes;
     const MIDIPacket *packet = &list->packet[0];
@@ -82,8 +77,10 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                 }
                 
                 unsigned char messageType = status & 0xF0;
-                unsigned char messageChannel = status & 0xF;
+                unsigned char messageChannel = (status & 0x0F) + 0x31;
+                printf("on channel: %c\n",messageChannel);
                 
+                //see http://www.midi.org/techspecs/midimessages.php for a list of midi messages
                 switch (messageType) {
                     case 0x80:
                         printf("Note off: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
@@ -94,7 +91,7 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                         break;
                         
                     case 0xA0:
-                        printf("Aftertouch: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
+                        printf("Polyphonic key pressure (aftertouch): %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
                         break;
                         
                     case 0xB0:
@@ -106,11 +103,11 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                         break;
                         
                     case 0xD0:
-                        printf("Change aftertouch: %d\n", packet->data[iByte + 1]);
+                        printf("Channel pressure (aftertouch): %d\n", packet->data[iByte + 1]);
                         break;
                         
                     case 0xE0:
-                        printf("Pitch wheel: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
+                        printf("Pitch bend change: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);
                         break;
                         
                     default:

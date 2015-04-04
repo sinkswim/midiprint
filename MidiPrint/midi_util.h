@@ -7,8 +7,8 @@
 #define __MidiPrint__midi_util__
 
 #include <stdio.h>
-
 #include <CoreMIDI/CoreMIDI.h>
+
 
 void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef);
 CFStringRef getDisplayName(MIDIObjectRef object);

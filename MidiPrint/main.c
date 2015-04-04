@@ -10,7 +10,6 @@
 #include "midi_util.h"
 
 
-
 int main(int argc, const char * argv[]) {
     printf("Welcome to MidiPrint\n\n");
     
@@ -33,10 +32,11 @@ int main(int argc, const char * argv[]) {
             }
         printf("---------------\n");
     }
+    printf("---------------\n");
     
     /////
     ItemCount numSources = MIDIGetNumberOfSources();
-    printf("number of sources: %lu\n\n", numSources);
+    printf("Number of active sources: %lu\n\n", numSources);
     MIDIClientRef midiClients[numSources];
     MIDIPortRef inputPorts[numSources];
     MIDIEndpointRef endpoints[numSources];
@@ -44,14 +44,15 @@ int main(int argc, const char * argv[]) {
     for(int i = 0; i < numSources; i++){
         result = MIDIClientCreate(CFSTR("MIDI client"), NULL, NULL, &midiClients[i]);
         if (result != noErr) {
-            printf("Error creating MIDI client: %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
+            printf("Error creating MIDI client"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
             return 1;
         }
-        result = MIDIInputPortCreate(midiClients[i], CFSTR("Input"), midiInputCallback, NULL, &inputPorts[i]);
         endpoints[i] = MIDIGetSource(i);
-        result = MIDIPortConnectSource(inputPorts[i], endpoints[i], NULL);
+        result = MIDIInputPortCreate(midiClients[i], CFSTR("Input"), midiInputCallback, NULL, &inputPorts[i]);
+        
+        result = MIDIPortConnectSource(inputPorts[i], endpoints[i], &endpoints[i]);
         if (result != noErr) {
-            printf("Error connecting port and source: %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
+            printf("Error connecting port and source"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
             return 1;
         }
         

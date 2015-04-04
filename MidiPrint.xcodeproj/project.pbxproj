@@ -25,12 +25,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E1317BFF1ABA79B50075D830 /* mpkmini_monitor_old.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mpkmini_monitor_old.c; sourceTree = "<group>"; };
 		E1317C021ABA86310075D830 /* midi_util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = midi_util.c; sourceTree = "<group>"; };
 		E1317C031ABA86310075D830 /* midi_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = midi_util.h; sourceTree = "<group>"; };
 		E1BA50681AB9C4B300DB172F /* MidiPrint */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MidiPrint; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BA506B1AB9C4B300DB172F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		E1BA50761AB9C70300DB172F /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		E1C4824D1AD096F6006080BB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +48,7 @@
 		E1BA505F1AB9C4B300DB172F = {
 			isa = PBXGroup;
 			children = (
+				E1C4824D1AD096F6006080BB /* CoreFoundation.framework */,
 				E1BA50761AB9C70300DB172F /* CoreMIDI.framework */,
 				E1BA506A1AB9C4B300DB172F /* MidiPrint */,
 				E1BA50691AB9C4B300DB172F /* Products */,
@@ -68,7 +69,6 @@
 				E1BA506B1AB9C4B300DB172F /* main.c */,
 				E1317C021ABA86310075D830 /* midi_util.c */,
 				E1317C031ABA86310075D830 /* midi_util.h */,
-				E1317BFF1ABA79B50075D830 /* mpkmini_monitor_old.c */,
 			);
 			path = MidiPrint;
 			sourceTree = "<group>";
