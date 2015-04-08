@@ -47,7 +47,7 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
             while (iByte < nBytes) {
                 size = 0;
                 
-                // First byte should be status
+                // First byte is the status byte
                 unsigned char status = packet->data[iByte];
                 if (status < 0xC0) {
                     size = 3;
