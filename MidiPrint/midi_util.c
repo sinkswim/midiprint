@@ -10,11 +10,61 @@
 #define SYSEX_LENGTH 1024
 
 
+//Print out the list of present endpoints
+void printMIDIList(){
+    ItemCount numOfDevices = MIDIGetNumberOfDevices();
+    for (int i = 0; i < numOfDevices; i++) {
+        MIDIDeviceRef midiDevice = MIDIGetDevice(i);
+        CFStringRef deviceName = getDisplayName(midiDevice);
+        ItemCount numSources = MIDIEntityGetNumberOfSources(midiDevice);
+    
+        CFShow(deviceName);
+        printf("numSources=%lu\n", numSources);
+    
+        for (int j = 0; j < numSources; j++) {
+            MIDIEndpointRef endpoint = MIDIEntityGetSource(midiDevice, j);
+            CFStringRef endpointName = getDisplayName(endpoint);
+            printf("endpoint: ");
+            fflush(stdout);
+            CFShow(endpointName);
+        }
+        printf("---------------\n");
+    }
+    printf("---------------\n");
+}
+
+//Set up active sources and their callback
+void setupActiveMIDISources(){
+    ItemCount numSources = MIDIGetNumberOfSources();
+    printf("Number of active sources: %lu\n\n", numSources);
+    MIDIClientRef midiClients[numSources];
+    MIDIPortRef inputPorts[numSources];
+    MIDIEndpointRef endpoints[numSources];
+    OSStatus result;
+    for(int i = 0; i < numSources; i++){
+        result = MIDIClientCreate(CFSTR("MIDI client"), NULL, NULL, &midiClients[i]);
+        if (result != noErr) {
+            printf("Error creating MIDI client"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
+        }
+        endpoints[i] = MIDIGetSource(i);
+        result = MIDIInputPortCreate(midiClients[i], CFSTR("Input"), midiInputCallback, NULL, &inputPorts[i]);
+        if (result != noErr) {
+            printf("Error creating input port"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
+        }
+    
+        result = MIDIPortConnectSource(inputPorts[i], endpoints[i], &endpoints[i]);
+        if (result != noErr) {
+            printf("Error connecting port and source"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
+        }
+    
+    }
+}
+
 int min(int a,  int b){
     return (a>=b)?b:a;
 }
 
-//called whenever there is incoming MIDI from connected sources, see doc for MIDIReadProc
+//Called whenever there is incoming MIDI from connected sources, see doc for MIDIReadProc
 void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef){
     printf("Message from: ");
     MIDIObjectRef midiObject = *(MIDIObjectRef*)srcRef;
@@ -80,7 +130,7 @@ void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef)
                 unsigned char messageChannel = (status & 0x0F) + 0x31;
                 printf("on channel: %c\n",messageChannel);
                 
-                //see http://www.midi.org/techspecs/midimessages.php for a list of midi messages
+                //Check http://www.midi.org/techspecs/midimessages.php for a list of midi messages
                 switch (messageType) {
                     case 0x80:
                         printf("Note off: %d, %d\n", packet->data[iByte + 1], packet->data[iByte + 2]);

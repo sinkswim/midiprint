@@ -9,7 +9,8 @@
 #include <stdio.h>
 #include <CoreMIDI/CoreMIDI.h>
 
-
+void printMIDIList();
+void setupActiveMIDISources();
 void midiInputCallback (const MIDIPacketList *list, void *procRef, void *srcRef);
 CFStringRef getDisplayName(MIDIObjectRef object);
 char* midiTypeToString(MIDIObjectType midiType);

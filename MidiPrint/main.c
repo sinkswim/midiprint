@@ -13,52 +13,11 @@
 int main(int argc, const char * argv[]) {
     printf("Welcome to MidiPrint\n\n");
     
-    ItemCount numOfDevices = MIDIGetNumberOfDevices();
+    //Print out the list of present endpoints
+    printMIDIList();
     
-    for (int i = 0; i < numOfDevices; i++) {
-        MIDIDeviceRef midiDevice = MIDIGetDevice(i);
-        CFStringRef deviceName = getDisplayName(midiDevice);
-        ItemCount numSources = MIDIEntityGetNumberOfSources(midiDevice);
-    
-        CFShow(deviceName);
-        printf("numSources=%lu\n", numSources);
-    
-        for (int j = 0; j < numSources; j++) {
-            MIDIEndpointRef endpoint = MIDIEntityGetSource(midiDevice, j);
-            CFStringRef endpointName = getDisplayName(endpoint);
-            printf("endpoint: ");
-            fflush(stdout);
-            CFShow(endpointName);
-            }
-        printf("---------------\n");
-    }
-    printf("---------------\n");
-    
-    /////
-    ItemCount numSources = MIDIGetNumberOfSources();
-    printf("Number of active sources: %lu\n\n", numSources);
-    MIDIClientRef midiClients[numSources];
-    MIDIPortRef inputPorts[numSources];
-    MIDIEndpointRef endpoints[numSources];
-    OSStatus result;
-    for(int i = 0; i < numSources; i++){
-        result = MIDIClientCreate(CFSTR("MIDI client"), NULL, NULL, &midiClients[i]);
-        if (result != noErr) {
-            printf("Error creating MIDI client"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
-            return 1;
-        }
-        endpoints[i] = MIDIGetSource(i);
-        result = MIDIInputPortCreate(midiClients[i], CFSTR("Input"), midiInputCallback, NULL, &inputPorts[i]);
-        
-        result = MIDIPortConnectSource(inputPorts[i], endpoints[i], &endpoints[i]);
-        if (result != noErr) {
-            printf("Error connecting port and source"); // %s - %s", GetMacOSStatusErrorString(result), GetMacOSStatusCommentString(result));
-            return 1;
-        }
-        
-    }
-    //////
-
+    //Set up active sources and their callback
+    setupActiveMIDISources();
 
     CFRunLoopRun();
     

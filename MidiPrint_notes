@@ -1,17 +1,21 @@
 MidiPrint Notes and TODO
 
 NOTES:
-	—— the purpose of this tool is to display midi devices connected to the system, print midi messages on screen (raw info or key light up)
+	—— the purpose of this tool is to display midi devices connected to the system and print midi messages
 
 TODO:
-	—- add graphical user interface: single responsive octave keyboard (keys light up when callback function is invoked)
-	—- test on other midi devices
+	—- test on multiple midi devices
 	
 
 DONE:
-	--improve tool printing out all devices that are connected and their midi messages (mpkmini -> all)
+	--improve tool printing out all devices that are connected and their midi messages 
+
+
+
+
 
 OLD PROGRAM (printed mpkMINI messages only):
+
 	create a MIDIClientRef midiClient
 	create a MIDIPortRef midiInputPort, here we declare the midiInputCallback that will be called when in CFRunLoop
 	get number of sources numSources
@@ -20,3 +24,6 @@ OLD PROGRAM (printed mpkMINI messages only):
 								 assert(mpkEndpoint != 0)
 								 connect endpoint to previously created inputPort MIDIPortConnectSource(inputPort, mpkEndpoint, NULL)
 								 CFRunLoopRun()
+
+COMPILING:
+	clang -framework Foundation -framework CoreMidi main.c midi_util.c -o midiprint
