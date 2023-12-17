@@ -1,5 +1,5 @@
 # midiprint
-A Mac OS X command line tool for displaying current MIDI devices and messages on the system.
+A Mac OS X command line tool for displaying current MIDI devices and monitoring MIDI messages on the system.
 
 ## compiling
 cd Midiprint
